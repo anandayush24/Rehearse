@@ -1,26 +1,253 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ---------- Design tokens ----------
+   Three themes, selected by <html data-theme>. An inline script in the layout sets the
+   attribute before first paint, so there is no flash. */
+:root,
+:root[data-theme="light"] {
+  --canvas: #f7f7f5;
+  --surface: #ffffff;
+  --raised: #f0efeb;
+  --line: #e4e3de;
+  --ink: #1b1c20;
+  --muted: #64676f;
+  --accent: #3b5bdb;
+  --accent-ink: #2f49b8;
+  --accent-soft: #eaeefd;
+  --accent-fg: #ffffff;
+  --success: #2b8a3e;
+  --success-soft: #e3f4e7;
+  --warn: #b26a00;
+  --warn-soft: #fcefd5;
+  --danger: #c92a2a;
+  --danger-soft: #fbe4e4;
+  --shadow: 0 1px 2px rgb(20 20 30 / 0.06), 0 8px 24px rgb(20 20 30 / 0.06);
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --canvas: #0e1014;
+  --surface: #15181e;
+  --raised: #1c2028;
+  --line: #292e38;
+  --ink: #e8eaef;
+  --muted: #9aa1ae;
+  --accent: #8ea2ff;
+  --accent-ink: #b4c1ff;
+  --accent-soft: #1d2442;
+  --accent-fg: #0e1014;
+  --success: #69db7c;
+  --success-soft: #16301e;
+  --warn: #ffd43b;
+  --warn-soft: #3a3012;
+  --danger: #ff8787;
+  --danger-soft: #3d1c1c;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px rgb(0 0 0 / 0.35);
+  color-scheme: dark;
+}
+
+:root[data-theme="sepia"] {
+  --canvas: #f4ecd8;
+  --surface: #fbf5e6;
+  --raised: #efe4cc;
+  --line: #e0d3b6;
+  --ink: #3a3129;
+  --muted: #7a6c5c;
+  --accent: #9a4f1f;
+  --accent-ink: #7e3f16;
+  --accent-soft: #f1e2c3;
+  --accent-fg: #ffffff;
+  --success: #3b7a2a;
+  --success-soft: #e4ecc9;
+  --warn: #9a6400;
+  --warn-soft: #f3e1b4;
+  --danger: #a53030;
+  --danger-soft: #f1d4c8;
+  --shadow: 0 1px 2px rgb(60 40 10 / 0.08), 0 8px 24px rgb(60 40 10 / 0.08);
+  color-scheme: light;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-fg: var(--accent-fg);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, Consolas, monospace;
+  --shadow-card: var(--shadow);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ---------- Base ---------- */
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+html[data-font="0"] {
+  font-size: 14.5px;
+}
+html[data-font="2"] {
+  font-size: 18px;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--accent-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- Rendered note content (HTML produced by the content build) ---------- */
+.prose-notes {
+  line-height: 1.7;
+  font-size: 0.975rem;
+  overflow-wrap: anywhere;
+}
+.prose-notes > :first-child {
+  margin-top: 0;
+}
+.prose-notes > :last-child {
+  margin-bottom: 0;
+}
+.prose-notes p {
+  margin: 0 0 0.9em;
+}
+.prose-notes ul,
+.prose-notes ol {
+  margin: 0 0 0.9em;
+  padding-left: 1.4em;
+}
+.prose-notes ul {
+  list-style: disc;
+}
+.prose-notes ol {
+  list-style: decimal;
+}
+.prose-notes li {
+  margin: 0.3em 0;
+}
+.prose-notes li > ul,
+.prose-notes li > ol {
+  margin: 0.3em 0 0;
+}
+.prose-notes strong {
+  font-weight: 600;
+}
+.prose-notes a {
+  color: var(--accent-ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.prose-notes h4,
+.prose-notes h5 {
+  margin: 1.2em 0 0.4em;
+  font-weight: 600;
+}
+.prose-notes blockquote {
+  margin: 0 0 0.9em;
+  padding: 0.5em 1em;
+  border-left: 3px solid var(--accent);
+  background: var(--accent-soft);
+  border-radius: 0 8px 8px 0;
+}
+.prose-notes :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  padding: 0.12em 0.38em;
+  border-radius: 5px;
+  background: var(--raised);
+}
+.prose-notes pre {
+  margin: 0 0 1em;
+  padding: 0.9rem 1rem;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  background: var(--raised) !important;
+}
+.prose-notes pre code {
+  padding: 0;
+  background: none;
+  font-size: inherit;
+}
+.prose-notes table {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 0 1em;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.prose-notes th,
+.prose-notes td {
+  padding: 0.45em 0.75em;
+  text-align: left;
+  vertical-align: top;
+  border: 1px solid var(--line);
+}
+.prose-notes th {
+  background: var(--raised);
+  font-weight: 600;
+}
+.prose-notes hr {
+  margin: 1.4em 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+
+/* Shiki: both themes are emitted as CSS variables; pick one per page theme. */
+.shiki,
+.shiki span {
+  color: var(--shiki-light);
+}
+:root[data-theme="dark"] .shiki span {
+  color: var(--shiki-dark);
+}
+.shiki {
+  background: transparent !important;
+}
+
+/* ---------- Utilities ---------- */
+.scroll-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
 }

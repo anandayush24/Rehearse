@@ -1,0 +1,5 @@
+.next
+out
+public/data
+package-lock.json
+tests/fixtures
