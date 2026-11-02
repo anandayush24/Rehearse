@@ -6,12 +6,13 @@ import type { Manifest, SearchDoc, TopicData } from "@/content/types";
 
 /** Runtime loaders for the static JSON in /data. Each URL is fetched once per page load. */
 
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const cache = new Map<string, Promise<unknown>>();
 
 function getJson<T>(url: string): Promise<T> {
   let promise = cache.get(url);
   if (!promise) {
-    promise = fetch(url).then((res) => {
+    promise = fetch(BASE + url).then((res) => {
       if (!res.ok) throw new Error(`Could not load ${url} (${res.status})`);
       return res.json();
     });

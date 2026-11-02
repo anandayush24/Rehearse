@@ -59,7 +59,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (process.env.NODE_ENV === "production" && "serviceWorker" in navigator) {
-      navigator.serviceWorker.register("/sw.js").catch(() => {
+      navigator.serviceWorker.register(`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/sw.js`).catch(() => {
         /* offline support is an enhancement */
       });
     }

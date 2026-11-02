@@ -12,12 +12,14 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 const jetbrains = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains", display: "swap" });
 
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 export const metadata: Metadata = {
   title: { default: "Rehearse", template: "%s · Rehearse" },
   description: "Senior engineering interview prep: questions, model answers and spaced repetition.",
   applicationName: "Rehearse",
-  manifest: "/manifest.webmanifest",
-  icons: { icon: "/icon.svg", apple: "/icons/icon-192.png" },
+  manifest: `${BASE}/manifest.webmanifest`,
+  icons: { icon: `${BASE}/icon.svg`, apple: `${BASE}/icons/icon-192.png` },
 };
 
 export const viewport: Viewport = {
