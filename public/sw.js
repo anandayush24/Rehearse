@@ -8,12 +8,14 @@ const STATIC = `static-${VERSION}`;
 const DATA = `data-${VERSION}`;
 const PAGES = `pages-${VERSION}`;
 const KEEP = [STATIC, DATA, PAGES];
+// Registration scope is the app root, e.g. https://host/Rehearse/ or https://host/
+const BASE = new URL(self.registration.scope).pathname.replace(/\/$/, "");
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches
       .open(PAGES)
-      .then((cache) => cache.addAll(["/", "/practice/", "/saved/", "/stats/", "/settings/"]))
+      .then((cache) => cache.addAll(["/", "/practice/", "/saved/", "/stats/", "/settings/"].map((p) => BASE + p)))
       .then(() => self.skipWaiting()),
   );
 });
@@ -55,7 +57,7 @@ async function networkFirstPage(request) {
     if (res.ok) cache.put(request, res.clone());
     return res;
   } catch {
-    return (await cache.match(request)) ?? (await cache.match("/")) ?? Response.error();
+    return (await cache.match(request)) ?? (await cache.match(BASE + "/")) ?? Response.error();
   }
 }
 
@@ -65,7 +67,7 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
 
-  if (url.pathname.startsWith("/_next/static/")) event.respondWith(cacheFirst(request, STATIC));
-  else if (url.pathname.startsWith("/data/")) event.respondWith(staleWhileRevalidate(request, DATA));
+  if (url.pathname.startsWith(BASE + "/_next/static/")) event.respondWith(cacheFirst(request, STATIC));
+  else if (url.pathname.startsWith(BASE + "/data/")) event.respondWith(staleWhileRevalidate(request, DATA));
   else if (request.mode === "navigate") event.respondWith(networkFirstPage(request));
 });
