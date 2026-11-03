@@ -31,6 +31,34 @@ export const TRACKS: Record<string, TrackConfig> = {
       X: "Cross-cutting",
     },
   },
+  B1: {
+    title: "JVM, Java/Kotlin & Concurrency",
+    sections: {
+      J: "JVM memory & GC",
+      M: "Memory model",
+      T: "Threads & async",
+      L: "Locks & collections",
+      V: "Virtual threads",
+      K: "Kotlin on the server",
+      P: "Profiling",
+      C: "Collections & language",
+      X: "Cross-cutting",
+    },
+  },
+  C1: {
+    title: "GenAI Foundations",
+    sections: {
+      E: "Embeddings",
+      K: "Tokenization",
+      T: "Transformers",
+      R: "Training",
+      S: "Scaling",
+      W: "Context windows",
+      M: "Model selection",
+      G: "Generation",
+      X: "Cross-cutting",
+    },
+  },
 };
 
 export function trackConfig(track: string): TrackConfig {
