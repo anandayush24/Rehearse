@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useMemo } from "react";
 
 import { useNav } from "@/components/nav-provider";
+import { categoryById } from "@/content/categories";
 import { ProgressRing, btn, btnPrimary, cn } from "@/components/ui";
 import { currentStreak } from "@/lib/progress";
 import { isDue } from "@/lib/srs";
@@ -33,8 +34,17 @@ function Tile({
   );
 }
 
-export function Dashboard() {
-  const { nav, topics, topicById, topicOfQuestion } = useNav();
+export function Dashboard({ category }: { category?: string }) {
+  const { nav: fullNav, topics: allTopics, topicById, topicOfQuestion } = useNav();
+  const cat = category ? categoryById(category) : undefined;
+  const nav = useMemo(
+    () => (cat ? { ...fullNav, tracks: fullNav.tracks.filter((t) => cat.tracks.includes(t.id)) } : fullNav),
+    [fullNav, cat],
+  );
+  const topics = useMemo(
+    () => (cat ? nav.tracks.flatMap((t) => t.sections.flatMap((s) => s.topics)) : allTopics),
+    [cat, nav, allTopics],
+  );
   const questions = useStore((s) => s.questions);
   const reviews = useStore((s) => s.reviews);
   const lastTopic = useStore((s) => s.lastTopic);
@@ -63,10 +73,23 @@ export function Dashboard() {
   const resume = lastQuestion ? topicOfQuestion.get(lastQuestion) : lastTopic;
   const resumeTopic = resume ? topicById.get(resume) : undefined;
 
+  if (cat && !topics.length) {
+    return (
+      <div>
+        <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{cat.label}</h1>
+        <p className="mt-6 rounded-2xl border border-dashed border-line p-10 text-center text-sm text-muted">
+          {cat.label} questions are coming soon.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div>
       <header className="mb-6">
-        <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">Senior interview prep</h1>
+        <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+          {cat ? cat.label : "Senior interview prep"}
+        </h1>
         <p className="mt-1.5 text-sm text-muted">
           {totals.total} questions across {topics.length} topics. Read the model answers, then practice them
           until they stick.

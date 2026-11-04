@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 
+import { CategoryBar } from "@/components/category-bar";
 import { CommandPalette } from "@/components/command-palette";
 import { Sidebar } from "@/components/sidebar";
 import { cn } from "@/components/ui";
@@ -96,29 +97,32 @@ export function AppShell({ children }: { children: ReactNode }) {
       )}
 
       <div className="flex min-w-0 flex-col">
-        <header className="sticky top-0 z-30 flex h-14 items-center gap-2 border-b border-line bg-canvas/85 px-3 backdrop-blur sm:px-6">
-          <button
-            type="button"
-            onClick={() => setDrawer(pathname)}
-            aria-label="Open topics"
-            className="rounded-lg p-2 text-muted hover:bg-raised lg:hidden"
-          >
-            <Menu className="size-5" />
-          </button>
-          <Link href="/" className="text-sm font-semibold tracking-tight lg:hidden">
-            Rehearse
-          </Link>
-          <button
-            type="button"
-            onClick={() => setPalette(true)}
-            className="ml-auto flex h-9 w-full max-w-xs items-center gap-2 rounded-lg border border-line bg-surface px-3 text-sm text-muted transition-colors hover:border-accent sm:max-w-sm"
-          >
-            <Search className="size-4" aria-hidden />
-            <span className="flex-1 truncate text-left">Search questions…</span>
-            <kbd className="hidden rounded border border-line px-1.5 py-0.5 text-[10px] sm:inline">
-              Ctrl K
-            </kbd>
-          </button>
+        <header className="sticky top-0 z-30 border-b border-line bg-canvas/85 backdrop-blur">
+          <div className="flex h-14 items-center gap-2 px-3 sm:px-6">
+            <button
+              type="button"
+              onClick={() => setDrawer(pathname)}
+              aria-label="Open topics"
+              className="rounded-lg p-2 text-muted hover:bg-raised lg:hidden"
+            >
+              <Menu className="size-5" />
+            </button>
+            <Link href="/" className="text-sm font-semibold tracking-tight lg:hidden">
+              Rehearse
+            </Link>
+            <button
+              type="button"
+              onClick={() => setPalette(true)}
+              className="ml-auto flex h-9 w-full max-w-xs items-center gap-2 rounded-lg border border-line bg-surface px-3 text-sm text-muted transition-colors hover:border-accent sm:max-w-sm"
+            >
+              <Search className="size-4" aria-hidden />
+              <span className="flex-1 truncate text-left">Search questions…</span>
+              <kbd className="hidden rounded border border-line px-1.5 py-0.5 text-[10px] sm:inline">
+                Ctrl K
+              </kbd>
+            </button>
+          </div>
+          <CategoryBar />
         </header>
 
         <main

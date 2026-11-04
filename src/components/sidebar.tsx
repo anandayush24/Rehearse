@@ -6,7 +6,9 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 import { cn } from "@/components/ui";
+import { useActiveCategory } from "@/components/category-bar";
 import { useNav } from "@/components/nav-provider";
+import { categoryById } from "@/content/categories";
 import { isDue } from "@/lib/srs";
 import { useHydrated, useStore } from "@/lib/store";
 import { useNow } from "@/lib/use-now";
@@ -24,6 +26,8 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
   const questions = useStore((s) => s.questions);
   const hydrated = useHydrated();
+  const category = categoryById(useActiveCategory() ?? "");
+  const tracks = category ? nav.tracks.filter((t) => category.tracks.includes(t.id)) : nav.tracks;
   const activeTopic = /^\/topics\/([^/]+)/.exec(pathname)?.[1];
   const [closed, setClosed] = useState<Set<string>>(new Set());
 
@@ -40,7 +44,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
     <nav aria-label="Primary" className="flex h-full flex-col">
       <Link href="/" onClick={onNavigate} className="flex items-center gap-2.5 px-5 py-4">
         <span className="grid size-8 place-items-center rounded-lg bg-accent text-sm font-bold text-accent-fg">
-          SP
+          R
         </span>
         <span className="text-[15px] font-semibold tracking-tight">Rehearse</span>
       </Link>
@@ -68,7 +72,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
       </ul>
 
       <div className="scroll-thin mt-4 min-h-0 flex-1 overflow-y-auto border-t border-line px-3 pb-6 pt-3">
-        {nav.tracks.map((track) => (
+        {tracks.map((track) => (
           <div key={track.id} className="mb-4">
             <p className="px-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-muted">
               {track.id} · {track.title}
