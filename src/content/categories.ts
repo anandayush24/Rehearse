@@ -13,7 +13,7 @@ export const CATEGORIES: Category[] = [
   { id: "lld", label: "LLD", tracks: [] },
   { id: "dsa", label: "DSA", tracks: [] },
   { id: "cicd", label: "CI/CD", tracks: [] },
-  { id: "certifications", label: "Certifications", tracks: [] },
+  { id: "certifications", label: "Certifications", tracks: ["D1"] },
 ];
 
 export const categoryById = (id: string) => CATEGORIES.find((c) => c.id === id);

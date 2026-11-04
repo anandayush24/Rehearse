@@ -50,5 +50,5 @@ describe.skipIf(!existsSync(path.join(realRoot, "A1", "chunks")))("buildContent 
     for (const t of manifest.topics) {
       expect(t.questions.length, `${t.id} has questions`).toBeGreaterThan(0);
     }
-  });
+  }, 300_000); // the full build grows with the notes
 });
