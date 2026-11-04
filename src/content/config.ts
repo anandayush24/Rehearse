@@ -59,6 +59,19 @@ export const TRACKS: Record<string, TrackConfig> = {
       X: "Cross-cutting",
     },
   },
+  D1: {
+    title: "Claude Developer Certification",
+    sections: {
+      P: "Prompting & outputs",
+      T: "Tool use & streaming",
+      C: "Context & memory",
+      A: "Agents & Claude Code",
+      M: "MCP & secrets",
+      E: "Evals, errors & cost",
+      S: "Security",
+      D: "Regulated delivery",
+    },
+  },
 };
 
 export function trackConfig(track: string): TrackConfig {

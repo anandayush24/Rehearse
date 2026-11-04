@@ -37,7 +37,7 @@ const htmlAsText: Plugin<[], MdNode> = () => (tree) => {
   walk(tree, true);
 };
 
-const LANGS: BundledLanguage[] = ["kotlin", "java", "groovy", "xml", "json", "yaml", "bash", "sql"];
+const LANGS: BundledLanguage[] = ["kotlin", "java", "groovy", "xml", "json", "yaml", "bash", "sql", "python"];
 
 const SHIKI: RehypeShikiOptions = {
   themes: { light: "github-light", dark: "github-dark" },

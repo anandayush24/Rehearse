@@ -1,6 +1,6 @@
 "use client";
 
-import { BarChart3, Bookmark, ChevronRight, GraduationCap, LayoutDashboard, Settings } from "lucide-react";
+import { BarChart3, BookOpen, Bookmark, ChevronRight, GraduationCap, LayoutDashboard, Settings } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -15,6 +15,7 @@ import { useNow } from "@/lib/use-now";
 
 const PRIMARY = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/guide/", label: "Cert Guide", icon: BookOpen },
   { href: "/practice/", label: "Practice", icon: GraduationCap },
   { href: "/saved/", label: "Saved", icon: Bookmark },
   { href: "/stats/", label: "Stats", icon: BarChart3 },
