@@ -7,8 +7,9 @@ import { renderMarkdown } from "@/content/render";
 
 export const metadata: Metadata = { title: "Claude Developer: Study Guide" };
 
+// shortcut: a copy of ../D1/summary.md (the notes folder is not in the repo); re-copy it when the notes change.
 export default async function GuidePage() {
-  const md = await readFile(path.resolve(process.cwd(), "..", "D1", "summary.md"), "utf8");
+  const md = await readFile(path.join(process.cwd(), "content", "d1-summary.md"), "utf8");
   const html = await renderMarkdown(md);
   return (
     <article className="mx-auto max-w-3xl px-4 py-8">
