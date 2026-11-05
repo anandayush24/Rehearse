@@ -15,7 +15,7 @@ import { useNow } from "@/lib/use-now";
 
 const PRIMARY = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/guide/", label: "Cert Guide", icon: BookOpen },
+  { href: "/notes/", label: "Notes", icon: BookOpen },
   { href: "/practice/", label: "Practice", icon: GraduationCap },
   { href: "/saved/", label: "Saved", icon: Bookmark },
   { href: "/stats/", label: "Stats", icon: BarChart3 },

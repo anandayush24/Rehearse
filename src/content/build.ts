@@ -54,6 +54,29 @@ async function listTracks(contentRoot: string): Promise<string[]> {
   return tracks.sort();
 }
 
+export const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+/** `<TRACK>/notes/<NN>_<code>.md`, split on `## ` headings (outside code fences). Missing file → no notes. */
+async function buildNotes(file: string) {
+  let md: string;
+  try {
+    md = await readFile(file, "utf8");
+  } catch {
+    return undefined;
+  }
+  const parts: { title: string; lines: string[] }[] = [];
+  let fence = false;
+  for (const line of md.replace(/\r\n/g, "\n").split("\n")) {
+    if (/^\s*```/.test(line)) fence = !fence;
+    const h = !fence && /^## (.+)/.exec(line);
+    if (h) parts.push({ title: h[1].trim(), lines: [] });
+    else parts.at(-1)?.lines.push(line);
+  }
+  return Promise.all(
+    parts.map(async (p) => ({ id: slug(p.title), title: p.title, html: await renderMarkdown(p.lines.join("\n")) })),
+  );
+}
+
 async function buildQuestion(topic: string, q: ParsedQuestion): Promise<Question> {
   const sections = await Promise.all(
     q.sections.map(async (s) => ({ key: s.key, label: s.label, html: await renderMarkdown(s.md) })),
@@ -67,6 +90,7 @@ async function buildQuestion(topic: string, q: ParsedQuestion): Promise<Question
     scenarioType: q.scenarioType,
     contextHtml: q.context ? await renderMarkdown(q.context) : undefined,
     promptHtml: await renderMarkdown(q.prompt),
+    notes: q.notes,
     sections,
   });
 }
@@ -114,8 +138,11 @@ export async function buildContent(contentRoot: string): Promise<BuildResult> {
       const rawQuestions = parsed.flatMap((p) => p.questions);
       rawQuestions.forEach(validateParsed);
 
+      const notes = await buildNotes(path.join(contentRoot, track, "notes", `${key}.md`));
       const questions: Question[] = [];
       for (const rq of rawQuestions) {
+        if (rq.notes && !notes?.some((n) => n.id === rq.notes))
+          throw new Error(`${rq.id}: Notes: "${rq.notes}" is not a section of ${track}/notes/${key}.md`);
         if (seen.has(rq.id)) throw new Error(`Duplicate question id ${rq.id} (in ${key})`);
         seen.add(rq.id);
         questions.push(await buildQuestion(id, rq));
@@ -133,7 +160,7 @@ export async function buildContent(contentRoot: string): Promise<BuildResult> {
 
       const section = cfg.sections[code[0]] ?? "Other";
       sections.set(section, [...(sections.get(section) ?? []), id]);
-      topics.push(TopicDataSchema.parse({ id, title, scopeHtml: await renderMarkdown(scope), questions }));
+      topics.push(TopicDataSchema.parse({ id, title, scopeHtml: await renderMarkdown(scope), notes, questions }));
       metas.push({
         id,
         track,
@@ -141,6 +168,7 @@ export async function buildContent(contentRoot: string): Promise<BuildResult> {
         code,
         title,
         section,
+        hasNotes: !!notes,
         questions: questions.map(({ id: qid, level, kind, subtopic }) => ({
           id: qid,
           level,

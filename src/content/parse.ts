@@ -19,6 +19,8 @@ export interface ParsedQuestion {
   scenarioType?: string;
   context?: string;
   prompt: string;
+  /** Slug of the master-notes section this question is explained by. */
+  notes?: string;
   sections: ParsedSection[];
 }
 
@@ -41,6 +43,7 @@ interface SectionDef {
 }
 
 const SECTION_DEFS: SectionDef[] = [
+  { match: /^Notes$/i, key: "notes", label: "Notes" },
   { match: /^Q$/i, key: "prompt", label: "Question" },
   { match: /^Scenario$/i, key: "context", label: "Scenario" },
   { match: /^Question$/i, key: "prompt", label: "Question" },
@@ -132,6 +135,7 @@ export function parseChunk(text: string): ParsedChunk {
       scenarioType: scenarioType?.trim(),
       context: take("context"),
       prompt,
+      notes: take("notes")?.trim() || undefined,
       sections,
     });
   };

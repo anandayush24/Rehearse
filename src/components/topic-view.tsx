@@ -1,6 +1,6 @@
 "use client";
 
-import { GraduationCap } from "lucide-react";
+import { BookOpen, GraduationCap } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
@@ -124,6 +124,16 @@ export function TopicView({ topic, section }: { topic: TopicData; section: strin
           <GraduationCap className="size-4" aria-hidden /> Practice this topic
         </Link>
       </PageHeader>
+
+      {topic.notes && (
+        <Link
+          href={`/notes/${topic.id}/`}
+          className="mb-5 flex items-center gap-3 rounded-2xl border border-accent/40 bg-accent-soft p-4 text-sm font-medium text-accent-ink"
+        >
+          <BookOpen className="size-5 shrink-0" aria-hidden />
+          <span>Read the master notes first, then grind the questions. Each question's Source button jumps back to its part.</span>
+        </Link>
+      )}
 
       <div className="mb-5 rounded-2xl border border-line bg-surface p-4 shadow-card">
         <div className="mb-2 flex items-baseline justify-between text-sm">

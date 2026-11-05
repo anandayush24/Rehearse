@@ -31,6 +31,8 @@ export const QuestionSchema = z.object({
   /** Scenario questions only: the situation the candidate is given. */
   contextHtml: z.string().optional(),
   promptHtml: z.string().min(1),
+  /** Anchor of the master-notes section that explains this question. */
+  notes: z.string().optional(),
   sections: z.array(SectionSchema),
 });
 export type Question = z.infer<typeof QuestionSchema>;
@@ -39,6 +41,8 @@ export const TopicDataSchema = z.object({
   id: z.string(),
   title: z.string(),
   scopeHtml: z.string(),
+  /** Master notes: read these first; questions link to a section by id. */
+  notes: z.array(z.object({ id: z.string(), title: z.string(), html: z.string() })).optional(),
   questions: z.array(QuestionSchema),
 });
 export type TopicData = z.infer<typeof TopicDataSchema>;
@@ -58,6 +62,7 @@ export const TopicMetaSchema = z.object({
   code: z.string(),
   title: z.string(),
   section: z.string(),
+  hasNotes: z.boolean().optional(),
   questions: z.array(QuestionMetaSchema),
 });
 export type TopicMeta = z.infer<typeof TopicMetaSchema>;

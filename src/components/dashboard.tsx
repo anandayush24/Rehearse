@@ -141,7 +141,7 @@ export function Dashboard({ category }: { category?: string }) {
               <h3 className="mb-2.5 text-xs font-semibold uppercase tracking-wider text-accent-ink">
                 {section.name}
               </h3>
-              <div className="grid gap-3 sm:grid-cols-2">
+              <div className="grid grid-cols-[repeat(auto-fill,minmax(17rem,1fr))] gap-3">
                 {section.topics.map((t) => {
                   const done = hydrated ? t.qids.filter((q) => questions[q]?.done).length : 0;
                   const due = hydrated ? t.qids.filter((q) => isDue(questions[q]?.srs, now)).length : 0;
