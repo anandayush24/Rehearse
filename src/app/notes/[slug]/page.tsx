@@ -40,7 +40,7 @@ export default async function NotesPage({ params }: PageProps<"/notes/[slug]">) 
       <p className="mb-5 text-sm text-muted">
         Read this first.{" "}
         <Link href={`/topics/${topic.id}/`} className="underline">
-          Then grind the {topic.questions.length} questions
+          {topic.questions.length ? `Then grind the ${topic.questions.length} questions` : "Questions for this topic are coming next"}
         </Link>
         .
       </p>

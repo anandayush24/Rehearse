@@ -59,6 +59,60 @@ export const TRACKS: Record<string, TrackConfig> = {
       X: "Cross-cutting",
     },
   },
+  C2: {
+    title: "Inference & Cost",
+    sections: {
+      I: "Serving",
+      Q: "Optimization",
+      C: "Cost",
+    },
+  },
+  C3: {
+    title: "Prompting & Structured Output",
+    sections: {
+      P: "Prompting",
+      S: "Structured output",
+      R: "Robustness",
+    },
+  },
+  C4: {
+    title: "RAG",
+    sections: {
+      R: "Pipeline",
+      Q: "Retrieval",
+      O: "Operations",
+    },
+  },
+  C5: {
+    title: "Agents & Tools",
+    sections: {
+      A: "Basics",
+      P: "Patterns",
+      G: "Guardrails",
+    },
+  },
+  C6: {
+    title: "Fine-tuning",
+    sections: {
+      W: "Strategy",
+      P: "Methods",
+    },
+  },
+  C7: {
+    title: "Evals & Safety",
+    sections: {
+      M: "Evals",
+      S: "Safety",
+    },
+  },
+  C8: {
+    title: "GenAI System Design & LLMOps",
+    sections: {
+      A: "Architecture",
+      L: "LLMOps",
+      D: "Design",
+    },
+  },
   D1: {
     title: "Claude Developer Certification",
     sections: {
