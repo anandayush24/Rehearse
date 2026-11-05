@@ -21,9 +21,9 @@ export function useActiveCategory(): string | undefined {
       ),
     [nav],
   );
-  const [, kind, id] = /^\/(c|topics|q)\/([^/]+)/.exec(pathname) ?? [];
+  const [, kind, id] = /^\/(c|topics|q|notes)\/([^/]+)/.exec(pathname) ?? [];
   if (kind === "c") return id;
-  if (kind === "topics") return categoryOfTopic.get(id);
+  if (kind === "topics" || kind === "notes") return categoryOfTopic.get(id);
   if (kind === "q") return categoryOfTopic.get(topicOfQuestion.get(id) ?? "");
   return undefined;
 }
