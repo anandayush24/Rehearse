@@ -1,6 +1,7 @@
 "use client";
 
-import { Bookmark, Check, ChevronDown, Eye, Link2, StickyNote } from "lucide-react";
+import { BookOpen, Bookmark, Check, ChevronDown, Eye, Link2, StickyNote } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 
 import { QuestionBody } from "@/components/question-body";
@@ -141,6 +142,14 @@ export function QuestionCard({ question, open, onToggle }: Props) {
             >
               <StickyNote className="size-3.5" aria-hidden /> {hasNote ? "Edit note" : "Add note"}
             </button>
+            {question.notes && (
+              <Link
+                href={`/notes/${question.topic}/#${question.notes}`}
+                className={cn(action, "border-line hover:border-accent")}
+              >
+                <BookOpen className="size-3.5" aria-hidden /> Source
+              </Link>
+            )}
             <button
               type="button"
               onClick={copyLink}
