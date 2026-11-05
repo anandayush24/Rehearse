@@ -131,7 +131,7 @@ export function TopicView({ topic, section }: { topic: TopicData; section: strin
           className="mb-5 flex items-center gap-3 rounded-2xl border border-accent/40 bg-accent-soft p-4 text-sm font-medium text-accent-ink"
         >
           <BookOpen className="size-5 shrink-0" aria-hidden />
-          <span>Read the master notes first, then grind the questions. Each question's Source button jumps back to its part.</span>
+          <span>Read the master notes first, then grind the questions. Each question&apos;s Source button jumps back to its part.</span>
         </Link>
       )}
 

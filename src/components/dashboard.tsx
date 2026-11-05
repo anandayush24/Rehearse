@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useMemo } from "react";
 
 import { useNav } from "@/components/nav-provider";
+import { SubjectTabs } from "@/components/subject-tabs";
 import { categoryById } from "@/content/categories";
 import { ProgressRing, btn, btnPrimary, cn } from "@/components/ui";
 import { currentStreak } from "@/lib/progress";
@@ -76,8 +77,9 @@ export function Dashboard({ category }: { category?: string }) {
   if (cat && !topics.length) {
     return (
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{cat.label}</h1>
-        <p className="mt-6 rounded-2xl border border-dashed border-line p-10 text-center text-sm text-muted">
+        <h1 className="mb-4 text-2xl font-semibold tracking-tight sm:text-3xl">{cat.label}</h1>
+        <SubjectTabs category={cat.id} active="questions" />
+        <p className="mt-2 rounded-2xl border border-dashed border-line p-10 text-center text-sm text-muted">
           {cat.label} questions are coming soon.
         </p>
       </div>
@@ -86,10 +88,14 @@ export function Dashboard({ category }: { category?: string }) {
 
   return (
     <div>
+      {cat && (
+        <div className="mb-2">
+          <h1 className="mb-4 text-2xl font-semibold tracking-tight sm:text-3xl">{cat.label}</h1>
+          <SubjectTabs category={cat.id} active="questions" />
+        </div>
+      )}
       <header className="mb-6">
-        <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-          {cat ? cat.label : "Senior interview prep"}
-        </h1>
+        {!cat && <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">Senior interview prep</h1>}
         <p className="mt-1.5 text-sm text-muted">
           {totals.total} questions across {topics.length} topics. Read the model answers, then practice them
           until they stick.
