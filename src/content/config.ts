@@ -78,6 +78,9 @@ export const TRACKS: Record<string, TrackConfig> = {
       I: "Serving",
       Q: "Optimization",
       C: "Cost",
+      G: "Decoding",
+      P: "Delivery & cost ops",
+      D: "On-device",
     },
   },
   C3: {
@@ -86,6 +89,7 @@ export const TRACKS: Record<string, TrackConfig> = {
       P: "Prompting",
       S: "Structured output",
       R: "Robustness",
+      H: "Instruction hierarchy & reasoning",
     },
   },
   C4: {
@@ -94,6 +98,9 @@ export const TRACKS: Record<string, TrackConfig> = {
       R: "Pipeline",
       Q: "Retrieval",
       O: "Operations",
+      P: "Document parsing",
+      A: "Indexes & vector DBs",
+      S: "Security & isolation",
     },
   },
   C5: {
@@ -102,6 +109,9 @@ export const TRACKS: Record<string, TrackConfig> = {
       A: "Basics",
       P: "Patterns",
       G: "Guardrails",
+      T: "Tool design",
+      D: "Design choices",
+      E: "Evaluation & operations",
     },
   },
   C6: {
@@ -109,6 +119,9 @@ export const TRACKS: Record<string, TrackConfig> = {
     sections: {
       W: "Strategy",
       P: "Methods",
+      D: "Choosing & data",
+      T: "Training mechanics",
+      E: "Failure modes & evaluation",
     },
   },
   C7: {
@@ -116,6 +129,8 @@ export const TRACKS: Record<string, TrackConfig> = {
     sections: {
       M: "Evals",
       S: "Safety",
+      J: "LLM judges",
+      O: "Online evaluation",
     },
   },
   C8: {
@@ -124,6 +139,11 @@ export const TRACKS: Record<string, TrackConfig> = {
       A: "Architecture",
       L: "LLMOps",
       D: "Design",
+      P: "Product architectures",
+      V: "Voice & on-device",
+      K: "Cost & caching",
+      B: "Pipelines",
+      R: "Release engineering",
     },
   },
   D1: {
