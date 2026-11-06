@@ -45,6 +45,19 @@ export const TRACKS: Record<string, TrackConfig> = {
       X: "Cross-cutting",
     },
   },
+  C0: {
+    title: "Build with LLMs (Beginner, hands-on)",
+    sections: {
+      A: "Calling LLM APIs",
+      P: "Prompts & structured output",
+      E: "Embeddings & vector search",
+      R: "RAG end to end",
+      G: "Agents, tools & MCP",
+      H: "Production hardening",
+      M: "Android & JVM backends",
+      F: "Multimodal, local models & fine-tuning",
+    },
+  },
   C1: {
     title: "GenAI Foundations",
     sections: {
