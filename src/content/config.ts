@@ -146,6 +146,131 @@ export const TRACKS: Record<string, TrackConfig> = {
       R: "Release engineering",
     },
   },
+  H1: {
+    title: "HLD Core Concepts",
+    sections: {
+      S: "Scalability",
+      C: "Core concepts",
+    },
+  },
+  H0: {
+    title: "HLD Interview Framework",
+    sections: {
+      F: "Framework & estimation",
+    },
+  },
+  H2: {
+    title: "HLD Networking & APIs",
+    sections: {
+      N: "Networking",
+      P: "Proxies, LB & CDN",
+      A: "API design",
+      R: "Real-time",
+    },
+  },
+  H3: {
+    title: "HLD Data & Storage",
+    sections: {
+      D: "Databases",
+      I: "Indexes & engines",
+      R: "Replication & sharding",
+      T: "Transactions",
+      O: "Object, search & analytics",
+    },
+  },
+  H4: {
+    title: "HLD Caching & Messaging",
+    sections: {
+      C: "Caching",
+      Q: "Queues & streams",
+      E: "Delivery & workflows",
+    },
+  },
+  H5: {
+    title: "HLD Coordination, Production & Security",
+    sections: {
+      D: "Coordination",
+      P: "Production",
+      A: "Performance",
+      S: "Security",
+      T: "Key technologies",
+      X: "Patterns",
+    },
+  },
+  H6: {
+    title: "HLD Design Problems",
+    sections: {
+      P: "Problems",
+    },
+  },
+  M1: {
+    title: "Master: One App from 0 to 1B Users",
+    sections: {
+      S: "Stages",
+    },
+  },
+  L1: {
+    title: "LLD Foundations",
+    sections: {
+      O: "OOP",
+      R: "Relationships",
+      D: "Principles",
+      S: "SOLID",
+      U: "UML",
+    },
+  },
+  L2: {
+    title: "LLD Design Patterns",
+    sections: {
+      C: "Creational",
+      S: "Structural",
+      B: "Behavioral",
+      T: "Interview tips",
+    },
+  },
+  L3: {
+    title: "LLD Machine-Coding Problems",
+    sections: {
+      P: "Problems",
+    },
+  },
+  O1: {
+    title: "Operating Systems",
+    sections: {
+      P: "Processes & threads",
+      M: "Memory",
+      S: "Synchronization",
+      F: "Files & I/O",
+      K: "Kernel & containers",
+      D: "Debugging",
+    },
+  },
+  Q1: {
+    title: "DBMS",
+    sections: {
+      R: "Relational & SQL",
+      I: "Indexes & planning",
+      T: "Transactions",
+      S: "Storage & recovery",
+      D: "Distributed",
+    },
+  },
+  N1: {
+    title: "Computer Networks",
+    sections: {
+      F: "Foundations",
+      T: "Transport",
+      A: "Application & web",
+      S: "Security",
+      D: "Debugging & internet",
+    },
+  },
+  P1: {
+    title: "OOP Deep Dive",
+    sections: {
+      O: "OOP in depth",
+    },
+  },
   D1: {
     title: "Claude Developer Certification",
     sections: {

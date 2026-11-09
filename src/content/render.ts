@@ -5,6 +5,7 @@ import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import type { BundledLanguage } from "shiki";
 import { unified, type Plugin } from "unified";
+import { flowToSvg } from "./flow";
 
 /**
  * Markdown → HTML at build time. Code is highlighted with Shiki using CSS variables
@@ -57,7 +58,14 @@ const processor = unified()
 
 export async function renderMarkdown(md: string): Promise<string> {
   if (!md.trim()) return "";
-  return String(await processor.process(md));
+  // ```flow blocks are swapped for a placeholder paragraph, then for inline SVG after rendering.
+  const flows: string[] = [];
+  const body = md.replace(/^```flow[^\S\n]*\n([\s\S]*?)^```[^\S\n]*$/gm, (_, src: string) => {
+    flows.push(flowToSvg(src));
+    return `FLOWSVG${flows.length - 1}X`;
+  });
+  const html = String(await processor.process(body));
+  return html.replace(/<p>FLOWSVG(\d+)X<\/p>/g, (_, i: string) => flows[+i]);
 }
 
 /** Plain text for the search index: markup characters removed, code kept (identifiers are searchable). */
