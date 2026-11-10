@@ -264,3 +264,24 @@ body {
 .prose-notes figure.flow svg { display: block; margin: 0 auto; max-width: none; height: auto; }
 .prose-notes figure.flow figcaption { margin-top: 0.5rem; text-align: center; font-size: 0.8rem; color: var(--muted); }
 @media (prefers-reduced-motion: reduce) { .flow-dot { display: none; } }
+
+/* ---------- Multi-language code tabs (```cpp tab / ```java tab ...) ---------- */
+.codetabs { margin: 1rem 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.codetabs > input { position: absolute; opacity: 0; pointer-events: none; }
+.codetabs .ct-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem; padding: 0.4rem 0.75rem; background: var(--raised); border-bottom: 1px solid var(--line); font-size: 0.8rem; }
+.codetabs .ct-title { color: var(--muted); }
+.codetabs .ct-labels { display: flex; gap: 0.25rem; }
+.codetabs .ct-labels label { cursor: pointer; padding: 0.15rem 0.6rem; border-radius: 6px; color: var(--muted); }
+.codetabs .ct-panels > div { display: none; }
+.codetabs .ct-panels pre { margin: 0; border: 0; border-radius: 0; }
+.codetabs > input:focus-visible ~ .ct-head .ct-labels { outline: 2px solid currentColor; }
+.codetabs > input:nth-of-type(1):checked ~ .ct-panels > div:nth-child(1),
+.codetabs > input:nth-of-type(2):checked ~ .ct-panels > div:nth-child(2),
+.codetabs > input:nth-of-type(3):checked ~ .ct-panels > div:nth-child(3),
+.codetabs > input:nth-of-type(4):checked ~ .ct-panels > div:nth-child(4),
+.codetabs > input:nth-of-type(5):checked ~ .ct-panels > div:nth-child(5) { display: block; }
+.codetabs > input:nth-of-type(1):checked ~ .ct-head label:nth-child(1),
+.codetabs > input:nth-of-type(2):checked ~ .ct-head label:nth-child(2),
+.codetabs > input:nth-of-type(3):checked ~ .ct-head label:nth-child(3),
+.codetabs > input:nth-of-type(4):checked ~ .ct-head label:nth-child(4),
+.codetabs > input:nth-of-type(5):checked ~ .ct-head label:nth-child(5) { background: var(--line); color: inherit; font-weight: 600; }

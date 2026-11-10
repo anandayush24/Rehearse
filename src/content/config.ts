@@ -271,6 +271,19 @@ export const TRACKS: Record<string, TrackConfig> = {
       O: "OOP in depth",
     },
   },
+  I1: {
+    title: "CI/CD & DevOps",
+    sections: {
+      F: "Foundations",
+      P: "Pipelines",
+      C: "Docker",
+      K: "Kubernetes",
+      R: "Release strategies",
+      G: "GitOps & IaC",
+      Q: "Quality & security",
+      O: "Observability & DORA",
+    },
+  },
   D1: {
     title: "Claude Developer Certification",
     sections: {

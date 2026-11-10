@@ -17,7 +17,7 @@ export const CATEGORIES: Category[] = [
   { id: "networks", label: "Networks", tracks: ["N1"] },
   { id: "oop", label: "OOP", tracks: ["P1"] },
   { id: "dsa", label: "DSA", tracks: [] },
-  { id: "cicd", label: "CI/CD", tracks: [] },
+  { id: "cicd", label: "CI/CD", tracks: ["I1"] },
   { id: "certifications", label: "Certifications", tracks: ["D1"] },
 ];
 

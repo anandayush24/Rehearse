@@ -38,14 +38,14 @@ const htmlAsText: Plugin<[], MdNode> = () => (tree) => {
   walk(tree, true);
 };
 
-const LANGS: BundledLanguage[] = ["kotlin", "java", "groovy", "xml", "json", "yaml", "bash", "sql", "python"];
+const LANGS: BundledLanguage[] = ["kotlin", "java", "groovy", "xml", "json", "yaml", "bash", "sql", "python", "cpp"];
 
 const SHIKI: RehypeShikiOptions = {
   themes: { light: "github-light", dark: "github-dark" },
   defaultColor: false,
   langs: LANGS,
   fallbackLanguage: "text",
-  langAlias: { kts: "kotlin", gradle: "groovy", kt: "kotlin" },
+  langAlias: { kts: "kotlin", gradle: "groovy", kt: "kotlin", "c++": "cpp", py: "python" },
 };
 
 const processor = unified()
@@ -56,16 +56,44 @@ const processor = unified()
   .use(rehypeShiki, SHIKI)
   .use(rehypeStringify);
 
+const TAB_LABEL: Record<string, string> = { cpp: "C++", "c++": "C++", java: "Java", kotlin: "Kotlin", kt: "Kotlin", python: "Python", py: "Python" };
+let tabGroupId = 0;
+
+/** A run of fences marked `tab` (```cpp tab, ```java tab, ...) becomes ONE tabbed block, pure CSS so it works in the static export. */
+async function tabGroup(fences: { lang: string; code: string }[]): Promise<string> {
+  const id = `ct${tabGroupId++}`;
+  const labels = fences.map((f) => TAB_LABEL[f.lang] ?? f.lang);
+  const panels = await Promise.all(fences.map((f) => processor.process("```" + f.lang + "\n" + f.code + "```")));
+  const inputs = fences.map((_, i) => `<input type="radio" name="${id}" id="${id}-${i}"${i === 0 ? " checked" : ""} aria-label="${labels[i]}">`).join("");
+  const labelEls = labels.map((l, i) => `<label for="${id}-${i}">${l}</label>`).join("");
+  return `<div class="codetabs">${inputs}<div class="ct-head"><span class="ct-title">Languages: ${labels.join(" · ")}</span><span class="ct-labels">${labelEls}</span></div><div class="ct-panels">${panels.map((p) => `<div>${String(p)}</div>`).join("")}</div></div>`;
+}
+
+const FENCE = "^" + "`".repeat(3) + String.raw`(\w+\+*)[^\S
+]+tab[^\S
+]*
+([\s\S]*?)^` + "`".repeat(3) + String.raw`[^\S
+]*$`;
+
 export async function renderMarkdown(md: string): Promise<string> {
   if (!md.trim()) return "";
   // ```flow blocks are swapped for a placeholder paragraph, then for inline SVG after rendering.
   const flows: string[] = [];
-  const body = md.replace(/^```flow[^\S\n]*\n([\s\S]*?)^```[^\S\n]*$/gm, (_, src: string) => {
+  const groups: { lang: string; code: string }[][] = [];
+  let body = md.replace(/^```flow[^\S\n]*\n([\s\S]*?)^```[^\S\n]*$/gm, (_, src: string) => {
     flows.push(flowToSvg(src));
     return `FLOWSVG${flows.length - 1}X`;
   });
-  const html = String(await processor.process(body));
-  return html.replace(/<p>FLOWSVG(\d+)X<\/p>/g, (_, i: string) => flows[+i]);
+  body = body.replace(new RegExp(String.raw`(?:${FENCE}\n*)+`, "gm"), (run) => {
+    groups.push([...run.matchAll(new RegExp(FENCE, "gm"))].map((m) => ({ lang: m[1], code: m[2] })));
+    return `\nTABSGRP${groups.length - 1}X\n\n`;
+  });
+  let html = String(await processor.process(body));
+  html = html.replace(/<p>FLOWSVG(\d+)X<\/p>/g, (_, i: string) => flows[+i]);
+  for (let i = 0; i < groups.length; i++) {
+    html = html.replace(`<p>TABSGRP${i}X</p>`, await tabGroup(groups[i]));
+  }
+  return html;
 }
 
 /** Plain text for the search index: markup characters removed, code kept (identifiers are searchable). */
