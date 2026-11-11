@@ -153,6 +153,35 @@ export const TRACKS: Record<string, TrackConfig> = {
       C: "Core concepts",
     },
   },
+  J1: {
+    title: "Swift Language & Concurrency",
+    sections: {
+      L: "Swift language",
+      C: "Concurrency",
+      T: "Tooling",
+    },
+  },
+  J2: {
+    title: "SwiftUI, UIKit & Architecture",
+    sections: {
+      U: "SwiftUI",
+      S: "State & navigation",
+      A: "Architecture",
+      K: "UIKit",
+      X: "Quality",
+    },
+  },
+  J3: {
+    title: "iOS Platform, Data & Release",
+    sections: {
+      N: "Networking & data",
+      B: "Background & security",
+      T: "Testing",
+      R: "Release",
+      F: "Frameworks",
+      I: "Interview",
+    },
+  },
   H0: {
     title: "HLD Interview Framework",
     sections: {

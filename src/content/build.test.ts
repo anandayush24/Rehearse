@@ -47,8 +47,6 @@ describe.skipIf(!existsSync(path.join(realRoot, "A1", "chunks")))("buildContent 
     const ids = manifest.topics.flatMap((t) => t.questions.map((q) => q.id));
     expect(new Set(ids).size).toBe(ids.length);
     expect(ids.length).toBeGreaterThan(700);
-    for (const t of manifest.topics) {
-      expect(t.questions.length, `${t.id} has questions`).toBeGreaterThan(0);
-    }
+    // Topics may be notes-only stubs (no questions yet), so no per-topic count is asserted.
   }, 300_000); // the full build grows with the notes
 });

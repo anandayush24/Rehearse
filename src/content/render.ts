@@ -38,7 +38,7 @@ const htmlAsText: Plugin<[], MdNode> = () => (tree) => {
   walk(tree, true);
 };
 
-const LANGS: BundledLanguage[] = ["kotlin", "java", "groovy", "xml", "json", "yaml", "bash", "sql", "python", "cpp"];
+const LANGS: BundledLanguage[] = ["kotlin", "java", "groovy", "xml", "json", "yaml", "bash", "sql", "python", "cpp", "swift"];
 
 const SHIKI: RehypeShikiOptions = {
   themes: { light: "github-light", dark: "github-dark" },
@@ -56,7 +56,7 @@ const processor = unified()
   .use(rehypeShiki, SHIKI)
   .use(rehypeStringify);
 
-const TAB_LABEL: Record<string, string> = { cpp: "C++", "c++": "C++", java: "Java", kotlin: "Kotlin", kt: "Kotlin", python: "Python", py: "Python" };
+const TAB_LABEL: Record<string, string> = { cpp: "C++", "c++": "C++", java: "Java", kotlin: "Kotlin", kt: "Kotlin", python: "Python", py: "Python", swift: "Swift" };
 let tabGroupId = 0;
 
 /** A run of fences marked `tab` (```cpp tab, ```java tab, ...) becomes ONE tabbed block, pure CSS so it works in the static export. */
