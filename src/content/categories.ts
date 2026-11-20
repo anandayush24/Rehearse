@@ -14,7 +14,7 @@ export const CATEGORIES: Category[] = [
   { id: "hld", label: "HLD", tracks: ["H0", "H1", "H2", "H3", "H4", "H5", "H6"] },
   { id: "lld", label: "LLD", tracks: ["L1", "L2", "L3"] },
   { id: "cs", label: "CS Basics", tracks: ["O1", "Q1", "N1", "P1"] },
-  { id: "dsa", label: "DSA", tracks: [] },
+  { id: "dsa", label: "DSA", tracks: ["S1"] },
   { id: "cicd", label: "CI/CD", tracks: ["I1"] },
   { id: "certifications", label: "Certifications", tracks: ["D1"] },
 ];
