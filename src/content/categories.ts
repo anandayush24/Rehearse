@@ -6,7 +6,7 @@ export interface Category {
 }
 
 export const CATEGORIES: Category[] = [
-  { id: "android", label: "Android", tracks: ["A1", "A2"] },
+  { id: "android", label: "Android", tracks: ["A1", "A2", "A3", "A4"] },
   { id: "ios", label: "iOS", tracks: ["J1", "J2", "J3"] },
   { id: "backend", label: "Backend", tracks: ["B1"] },
   { id: "genai", label: "GenAI", tracks: ["C0", "C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8"] },
